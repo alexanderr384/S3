@@ -1,0 +1,45 @@
+# Description: Adding assignment-required header with details for VPC creation in us-west-2 for student alerod3549.
+# Revision: 1.0
+# Date: 12/04/2025
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "VPC for student alerod3549 in us-west-2 spanning 3 AZs"
+
+Resources:
+  VPCalerod3549:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: VPC-alerod3549
+
+  SubnetAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCalerod3549
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs us-west-2]
+      MapPublicIpOnLaunch: true
+
+  SubnetAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCalerod3549
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: !Select [1, !GetAZs us-west-2]
+      MapPublicIpOnLaunch: true
+
+  SubnetAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPCalerod3549
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: !Select [2, !GetAZs us-west-2]
+      MapPublicIpOnLaunch: true
+
+Outputs:
+  VPCID:
+    Description: "VPC ID created for student alerod3549"
+    Value: !Ref VPCalerod3549
